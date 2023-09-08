@@ -515,7 +515,7 @@ end
 % Multiple fault strands...............................................
 
     if strcmp(invert.smooth_across_fault_strands, []) ==1 % if they left it to me to decide whether to treat fault strands differently or not.       
-        if any(abs(diff(strike))) > 18                             % austin elliott et al 2015 - bends greater than 18 degrees terminate rupture, so should treat as different faults
+        if any(abs(diff(strike)) > 18)                             % austin elliott et al 2015 - bends greater than 18 degrees terminate rupture, so should treat as different faults
             invert.smooth_across_fault_strands = 'yes';
         else
             invert.smooth_across_fault_strands = 'no';
