@@ -1727,8 +1727,8 @@ if strcmp(invert.inversion_type, 'bayesian') == 1                         %bayes
     m_curr = m_initial;
     m_trial = m_curr(:,1);
     m_identifyer_master = [ 1* ones(size(slip_initial,1),1); 2*ones(size(alpha2_modelparameter_initial,1),1); 3*ones(size(rake_initial,1),1); 4*ones(size(dip_initial,1),1); 5*ones(size(offset_modelparameter_initial,1),1); 6*ones(size(beta_initial,1),1); 7*ones(size(circharm_coeffs_initial,1),1); 8*ones(size(circharm_phi_initial,1),1); 9*ones(size(circharm_center_initial,1),1); 10*ones(size(a_as_modelparameter_initial,1),1); 11*ones(size(a_dd_modelparameter_initial,1),1); 12*ones(size(ramp_modelparameter_initial,1),1)];
-    %m_max = [max_slip; max_alpha2modelparameter; max_rake; max_dip; max_offset; max_beta; max_circharm_coeffs; max_circharm_phi; max_circharm_center; max_a_as_modelparameter; max_a_dd_modelparameter; max_ramp];
-    %m_min = [min_slip; min_alpha2modelparameter; min_rake; min_dip; min_offset; min_beta; min_circharm_coeffs; min_circharm_phi; min_circharm_center; min_a_as_modelparameter; min_a_dd_modelparameter; min_ramp];
+    m_max = [max_slip; max_alpha2modelparameter; max_rake; max_dip; max_offset; max_beta; max_circharm_coeffs; max_circharm_phi; max_circharm_center; max_a_as_modelparameter; max_a_dd_modelparameter; max_ramp];
+    m_min = [min_slip; min_alpha2modelparameter; min_rake; min_dip; min_offset; min_beta; min_circharm_coeffs; min_circharm_phi; min_circharm_center; min_a_as_modelparameter; min_a_dd_modelparameter; min_ramp];
     if strcmp(invert.ensemble_sampling, 'no') == 1
         step_sizes = [patch_step_sizes_initial; alpha2_step_size_initial; rake_step_size_initial; dip_step_size_initial; offset_step_size_initial; beta_step_size_initial; circharm_coeffs_step_size_initial;  circharm_phi_step_size_initial; circharm_center_step_size_initial; a_as_step_size; a_dd_step_size; ramp_step_size_initial];
         %step_sizes_master = step_sizes;
