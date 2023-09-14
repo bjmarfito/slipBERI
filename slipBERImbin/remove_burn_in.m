@@ -27,7 +27,7 @@ circharm_center_keep = m_keep(m_identifyer_master==9,:,:);
 ramp_keep = m_keep(m_identifyer_master==12,:,:);
 
 disp('Resaving now burn in has been removed.')
-savename = ['withburnin',housekeeping.save_name, '_', num2str(n_down_dip_patches_for_smoothing(1)), 'x', num2str(n_along_strike_patches_for_smoothing(1)), '_', invert.smoothing, 'smooth_', invert.solve_for_dip, 'dip_', num2str(invert.iterations), '_', invert.regularise_moment, 'M0reg_', priors.slip_prior, '_', invert.solve_for_fault_size, 'patchesonoff'];            
+savename = ['withburnin',housekeeping.save_name, '_', num2str(n_down_dip_patches_for_smoothing(1)), 'x', num2str(n_along_strike_patches_for_smoothing(1)), '_', invert.smoothing, 'smooth_', invert.solve_for_dip, 'dip_', num2str(invert.iterations), '_', invert.regularise_moment, 'M0reg_', priors.slip_prior, '_', invert.solve_for_fault_size, 'patchesonoff','burn-in', num2str(burn_in_remove_number)];            
 save(savename, '-v7.3');
 
 disp('Displaying result again...')
