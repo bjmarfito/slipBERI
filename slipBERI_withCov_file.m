@@ -1545,17 +1545,22 @@ if strcmp(invert.inversion_type, 'bayesian') == 1                         %bayes
                 r = down_dip_sep_dist./along_strike_sep_dist;  %   r is ratio of patch length in 1st dim over length in 2nd dim
                 free_edge= 1;   % 1 = top free
                 
-                for i = 1: n_fault_strands_for_smoothing   % If we're not smoothing across the faults, then we'll treat them all separately, so we'll store them all in a big diagonal matrix.                
-                    L_temp = laplace_fault(n_down_dip_patches_for_smoothing(i),n_along_strike_patches_for_smoothing(i),r(i),free_edge);  % thanks to andy for this one
-                    L = blkdiag(L,L_temp);
-                    clear L_temp
-                end
+                %for i = 1: n_fault_strands_for_smoothing   % If we're not smoothing across the faults, then we'll treat them all separately, so we'll store them all in a big diagonal matrix.                
+                    %L_temp = laplace_fault(n_down_dip_patches_for_smoothing(i),n_along_strike_patches_for_smoothing(i),r(i),free_edge);  % thanks to andy for this one
+                    %L = blkdiag(L,L_temp);
+                    %clear L_temp
+                %end
                 
                % THESIS CORRECTIONS - trying out all free edges
                L =[];
                 for i = 1: n_fault_strands_for_smoothing   % If we're not smoothing across the faults, then we'll treat them all separately, so we'll store them all in a big diagonal matrix.                
                     L_temp = laplace_fault_allfree(n_down_dip_patches_for_smoothing(i),n_along_strike_patches_for_smoothing(i),r(i),free_edge);  % thanks to andy for this one
                     L = blkdiag(L,L_temp);
+                    %if strcmp(invert.laplacian_smoothing_bayesian, 'none') ~= 1
+                        %invert.laplacian_smoothing_bayesian = 1 + invert.laplacian_smoothing_bayesian;
+                        %L = L.*invert.laplacian_smoothing_bayesian;
+                        %fprintf("Applying weighted Laplacian smoothing of %0.2f", invert.laplacian_smoothing_bayesian -1)
+                    %end
                     clear L_temp
                 end 
                 free_edge = 'all_free';
@@ -2596,7 +2601,7 @@ inversion_time = toc;
 
 %% Save everything - in case display_result doesn't run proper
 
-savename = ['withburnin', housekeeping.save_name, '_', num2str(n_down_dip_patches_for_smoothing(1)), 'x', num2str(n_along_strike_patches_for_smoothing(1)), '_', invert.smoothing, 'smooth_', invert.solve_for_dip, 'dip_', num2str(invert.iterations), '_', invert.regularise_moment, 'M0reg_', priors.slip_prior, '_', invert.solve_for_fault_size, 'patchesonoff'];            
+savename = [housekeeping.save_name, '_', num2str(n_down_dip_patches_for_smoothing(1)), 'x', num2str(n_along_strike_patches_for_smoothing(1)), '_', invert.smoothing, 'smooth_', invert.solve_for_dip, 'dip_', num2str(invert.iterations), '_', invert.regularise_moment, 'M0reg_', priors.slip_prior, '_', invert.solve_for_fault_size, 'patchesonoff']; 
 
 
 %save(savename);
