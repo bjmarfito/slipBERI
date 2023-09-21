@@ -1959,7 +1959,7 @@ if strcmp(invert.inversion_type, 'bayesian') == 1                         %bayes
         disp('This is the simulated annealing result, which will be used for starting values.')
         disp('Click on the figure to continue...')
         disp('   ');
-        %waitforbuttonpress;
+        waitforbuttonpress;
         
         % Recalculate initial probabilities
         for ii = 1:nwalkers

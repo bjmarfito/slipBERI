@@ -243,7 +243,7 @@ if strcmp(invert.inversion_type, 'bayesian') == 1
 
             % mean    
                 %theta = 180 - rake_mean;
-                theta = degtorad(rake_mean);
+                theta = deg2rad(rake_mean);
                        for r = 1 : total_n_slip_patches             % we wanna select the correct COLUMN, relating to the current slip patch, out of the G matrix for that value of rake.          
                                 G_mean(:,r) = cos(theta(r)) * G_ss(:,r) + sin(theta(r)) * G_ds(:,r);    % I THINK. check yo' trigonometry    
                        end 
@@ -251,7 +251,7 @@ if strcmp(invert.inversion_type, 'bayesian') == 1
 
             % median   
                 %theta = 180 - rake_median;
-                theta = degtorad(rake_median);        
+                theta = deg2rad(rake_median);        
                        for r = 1 : total_n_slip_patches             % we wanna select the correct COLUMN, relating to the current slip patch, out of the G matrix for that value of rake.
                                 G_median(:,r) = cos(theta(r)) * G_ss(:,r) + sin(theta(r)) * G_ds(:,r);    % I THINK. check yo' trigonometry 
                        end     
@@ -259,7 +259,7 @@ if strcmp(invert.inversion_type, 'bayesian') == 1
 
             % mode   
                 %theta = 180 - rake_mode;
-                theta = degtorad(rake_mode);    
+                theta = deg2rad(rake_mode);    
                        for r = 1 : total_n_slip_patches             % we wanna select the correct COLUMN, relating to the current slip patch, out of the G matrix for that value of rake.
                                  G_mode(:,r) = cos(theta(r)) * G_ss(:,r) + sin(theta(r)) * G_ds(:,r);    % I THINK. check yo' trigonometry 
                        end         
@@ -267,7 +267,7 @@ if strcmp(invert.inversion_type, 'bayesian') == 1
 
             % most_likely   
                 %theta = 180 - rake_mostlikely;
-                theta = degtorad(rake_mostlikely);         
+                theta = deg2rad(rake_mostlikely);         
                        for r = 1 : total_n_slip_patches             % we wanna select the correct COLUMN, relating to the current slip patch, out of the G matrix for that value of rake.
                                  G_mostlikely(:,r) = cos(theta(r)) * G_ss(:,r) + sin(theta(r)) * G_ds(:,r);    % I THINK. check yo' trigonometry  
                        end      
