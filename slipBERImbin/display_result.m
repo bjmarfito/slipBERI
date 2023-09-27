@@ -975,7 +975,7 @@ end
     
 %% Compare data (InSAR/GPS) and solution
 
-if strcmp(display.plotsurfacedisp, 'yes') + strcmp(testing.testing_mode, 'no') == 2;
+if strcmp(display.plotsurfacedisp, 'yes') + strcmp(testing.testing_mode, 'no') == 2
    
     figure('position', [100, 350, 1800, 600])
     counter=1;
@@ -1024,8 +1024,8 @@ if strcmp(display.plotsurfacedisp, 'yes') + strcmp(testing.testing_mode, 'no') =
         
         if strcmp(invert.variable_rake, 'yes') == 1
             G = G_mostlikely;
-         else
-            G = G;
+        %else
+            %G = G;
         end  
 
         d_hat =  G * patch_MAP;
@@ -1183,7 +1183,7 @@ if strcmp(display.plotsurfacedisp, 'yes') + strcmp(testing.testing_mode, 'no') =
 
 
 
-      end
+    end
 
 
 end
