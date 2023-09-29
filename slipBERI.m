@@ -2821,6 +2821,7 @@ disp('Burn-in by using the script burnin_results(filename, no. of samples to bur
 disp('e.g.')
 disp('   ')
 disp('burnin_results(filename, no. of burn-in)')
+disp('   ')
 
 end
 
