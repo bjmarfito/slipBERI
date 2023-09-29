@@ -2824,4 +2824,3 @@ disp('burnin_results(filename, no. of burn-in)')
 disp('   ')
 
 end
-
