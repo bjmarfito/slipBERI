@@ -14,7 +14,7 @@ function [] = burnin_results(fileName, noOfsamplesToBurnIn)
     burn_in_remove_number = noOfsamplesToBurnIn;
     
     % Print a message indicating how many burn-in samples will be removed
-    fprintf('Removing %d burn-in samples from %s\n', burn_in_remove_number, fileName)
+    fprintf('Removing %d burn-in samples from %s .\n', burn_in_remove_number, fileName)
     
     % Call the remove_burn_in function to remove the specified number of burn-in samples
     try
