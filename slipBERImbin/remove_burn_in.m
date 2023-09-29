@@ -35,4 +35,4 @@ display_result
 disp('...')
 disp('..')
 disp('.')
-disp('Keyboard mode now. To terminate keyboard mode and end the slipBERI function, type ''dbcont'' and press Enter')
+%disp('Keyboard mode now. To terminate keyboard mode and end the slipBERI function, type ''dbcont'' and press Enter')
