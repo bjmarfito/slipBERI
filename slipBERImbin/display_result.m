@@ -209,7 +209,7 @@ if strcmp(invert.inversion_type, 'bayesian') == 1
         if strcmp(invert.solve_for_InSAR_offset, 'yes') == 1
            for i = 1:n_InSAR_scenes
                 offset_mean(i,1) = mean(offset_keep(i,:));       % calculate the mean of the offset, but only the offsets relating to InSAR (the offsets relating to other datasets will be 0)
-                [counts, centers] = hist(offset_keep(i,:), nbins);   % count the number in each bin and the center of each bin
+                [counts, centers] = histogram(offset_keep(i,:), nbins);   % count the number in each bin and the center of each bin
                 [M,I] = max(counts'); % If A is a matrix, then max(A) is a row vector containing the maximum value of each column
                 offset_mode(i,1) = centers(1,I);
            end
@@ -225,7 +225,7 @@ if strcmp(invert.inversion_type, 'bayesian') == 1
         if strcmp(invert.solve_for_InSAR_ramp, 'yes') == 1
             for i = 1:(n_InSAR_scenes*3)
                 ramp_mean(i,1) = mean(ramp_keep(i,:));       % calculate the mean of the ramp, but only the ramps relating to InSAR (the ramps relating to other datasets will be 0)
-                [counts, centers] = hist(ramp_keep(i,:), nbins);   % count the number in each bin and the center of each bin
+                [counts, centers] = histogram(ramp_keep(i,:), nbins);   % count the number in each bin and the center of each bin
                 [M,I] = max(counts'); % If A is a matrix, then max(A) is a row vector containing the maximum value of each column
                 ramp_mode(i,1) = centers(1,I);
            end
@@ -868,7 +868,7 @@ if strcmp(display.plothists, 'plothistsample') == 1
 
         subplot(3,2,i)
         colormap default
-        hist( slip_keep( random(i-1), :),nbins)
+        histogram( slip_keep( random(i-1), :),nbins)
         hold on
         y = [0 max(M)];
         x_mean = [patch_mean(random(i-1)) patch_mean(random(i-1))];
@@ -1219,7 +1219,7 @@ if strcmp( display.plothists, 'plothistsall') == 1
        colormap default
        %hist( slip_keep_just_real_patches(i,:), nbins)
        %[counts, centers] = hist(slip_keep_just_real_patches(i,:), nbins);   
-       hist(slip_keep(i,onlyonkeptpatches(i,:)), nbins);
+       histogram(slip_keep(i,onlyonkeptpatches(i,:)), nbins);
        hold on
        x_mean = [patch_mean(i) patch_mean(i)];
        x_mode = [patch_mode(i) patch_mode(i)];
@@ -1269,12 +1269,12 @@ if strcmp(invert.smoothing, 'VK') ==1 && strcmp(invert.solve_for_correlation_len
    
     figure('position', [100, 300, 600, 800])
     subplot(2,1,1)
-    hist(a_as_keep, 100)
+    histogram(a_as_keep, 100)
     title('model parameter a along-strike')
     ylabel('frequency')
     
     subplot(2,1,2)
-    hist(a_dd_keep, 100)
+    histogram(a_dd_keep, 100)
     title('model parameter a down-dip')
     xlabel('value')
     
@@ -1308,14 +1308,14 @@ if strcmp(invert.solve_for_dip, 'yes') == 1;
 %          [M,I] = max(counts2');
     
        subplot(n_fault_strands, 1, i);
-       hist(dip_keep(i,:), 100);
+       histogram(dip_keep(i,:), 100);
        title(['dip on fault plane ', num2str(i)])
        ylabel('frequency')
        
        
             % Find mode
 
-                [counts, centers] = hist(dip_keep(i,:), 100);   % count the number in each bin and the center of each bin
+                [counts, centers] = histogram(dip_keep(i,:), 100);   % count the number in each bin and the center of each bin
                 [M,I] = max(counts'); % If A is a matrix, then max(A) is a row vector containing the maximum value of each column
                 
                 dip_mode = centers(1,I);
@@ -1563,7 +1563,7 @@ if strcmp(invert.solve_for_InSAR_offset, 'yes') == 1
     title('Offset')
     for p = 1: n_InSAR_scenes
         subplot(n_InSAR_scenes,1,p)
-        hist(offset_keep(p,:), 50)
+        histogram(offset_keep(p,:), 50)
     end
 end
  
@@ -1572,20 +1572,20 @@ if strcmp(invert.solve_for_InSAR_ramp, 'yes') == 1
     figure('position', [600, 300, 800, 1200])
     for p = 1: n_InSAR_scenes
         subplot(n_InSAR_scenes,3,3*p -2)
-        hist(ramp_keep(3*p -2,:), 50)
+        histogram(ramp_keep(3*p -2,:), 50)
         ylabel(['InSAR scene ', num2str(p)]);
         if p == 1
             title('InSAR ramp x')
         end
 
         subplot(n_InSAR_scenes,3,3*p -1)
-        hist(ramp_keep(3*p -1,:), 50)
+        histogram(ramp_keep(3*p -1,:), 50)
         if p == 1
             title('InSAR ramp y')
         end
 
         subplot(n_InSAR_scenes,3,3*p)
-        hist(ramp_keep(3*p,:), 50)
+        histogram(ramp_keep(3*p,:), 50)
         if p == 1
             title('InSAR ramp offset')
         end 
