@@ -9,6 +9,9 @@ function [] = burnin_results(fileName, noOfsamplesToBurnIn)
     catch exception
         error('Error loading file: %s', exception.message)
     end
+
+    % Close any opened figures to save memory
+    close all
     
     % Set the number of burn-in samples to remove
     burn_in_remove_number = noOfsamplesToBurnIn;
