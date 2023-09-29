@@ -2807,7 +2807,8 @@ disp('Using the probability plot and the histograms, decide how much burn in to 
 disp('Burn-in by using the script burnin_results(filename, no. of samples to burn-in)')
 disp('e.g.')
 disp('   ')
-disp('burnin_results(filename, no. of burn-in)')
+exampleMessage = "afghan_slip_12x22_laplaciansmooth_nodip_500000_noM0reg_boxcar_nopatchesonoff', 300000)";
+disp(exampleMessage)
 disp('   ')
 
 end
