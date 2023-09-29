@@ -2806,17 +2806,21 @@ disp('   ')
 disp('IMPORTANT: no burn in has been removed.')
 disp('Using the probability plot and the histograms, decide how much burn in to remove')
 disp('Set number of iterations to remove to burn_in_remove_number in the terminal')
-disp('Then run script ''remove_burn_in'' in the terminal')
+% disp('Then run script ''remove_burn_in'' in the terminal')
+% disp('e.g.')
+% disp('   ')
+% disp('burn_in_remove_number = 10000')
+%disp('remove_burn_in')
+% disp('   ')
+% disp('IMPORTANT: remove burn in now!')
+% disp('   ')
+% disp('Keyboard mode now. To terminate keyboard mode and end the slipBERI function, type ''dbcont'' and press Enter')
+% keyboard
+
+disp('Burn-in by using the script burnin_results(filename, no. of samples to burn-in)')
 disp('e.g.')
 disp('   ')
-disp('burn_in_remove_number = 10000')
-disp('remove_burn_in')
-disp('   ')
-disp('IMPORTANT: remove burn in now!')
-disp('   ')
-disp('Keyboard mode now. To terminate keyboard mode and end the slipBERI function, type ''dbcont'' and press Enter')
-keyboard
+disp('burnin_results(filename, no. of burn-in)')
 
- 
 end
 
