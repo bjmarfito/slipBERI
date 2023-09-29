@@ -1,6 +1,6 @@
 %% Code to implement burn-in for the results from slipBERI
 % Usage: burnin_results(filename, no. of burn-in)
-% Author: Bryan Marfito, Sept 29, 2023
+% Author: Bryan Marfito, 29 Sept 2023
 
 function [] = burnin_results(fileName, noOfsamplesToBurnIn)
     % Load the data from the specified file
