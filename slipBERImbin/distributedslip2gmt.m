@@ -18,10 +18,17 @@ function[] = distributedslip2gmt(fileName)
     crossSectionAlongStrikeCoord = crossSectionAlongStrikeCoord - crossSectionAlongStrikeCoord(1);
     crossSectionAlongStrikeCoord(crossSectionAlongStrikeCoord ~= 0) = -crossSectionAlongStrikeCoord(crossSectionAlongStrikeCoord ~= 0);
     crossSectionAlongStrikeCoord = crossSectionAlongStrikeCoord';
+
+    % Convert the distance along strike to km
+    crossSectionAlongStrikeCoord = crossSectionAlongStrikeCoord ./1000;
     
     % Extract the along-dip value and slip keep/save value for each point
-    alongDipCoord = faults(8,:)';
-    slip_keep_save = faults(6,:)';
+    % Convert along-dip to km
+    alongDipCoord = faults(8,:)' ./1000;
+    alongDipCoord(alongDipCoord ~=0) = -alongDipCoord(alongDipCoord ~=0);
+
+    % Convert slip to cm
+    slip_keep_save = faults(6,:)' .*100;
 
     % Combine the values into a matrix for output
     gmtValueFormat = [crossSectionAlongStrikeCoord alongDipCoord slip_keep_save];
