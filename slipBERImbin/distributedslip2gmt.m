@@ -31,7 +31,7 @@ function[] = distributedslip2gmt(fileName)
 
     % Generate metadata for subsurface slip
     metaDataSlip = [min(crossSectionAlongStrikeCoord) max(crossSectionAlongStrikeCoord); min(alongDipCoord) max(alongDipCoord)];
-    writematrix(meteDataSlip, 'metadata_slip.txt', 'Delimiter', 'space');
+    writematrix(metaDataSlip, 'metadata_slip.txt', 'Delimiter', 'space');
 
     % Generate data, model and residual files for GMT
     lonlat = locs_InSAR_latlong(1:2,:)';
