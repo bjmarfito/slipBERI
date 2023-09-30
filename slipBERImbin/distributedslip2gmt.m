@@ -17,7 +17,8 @@ function[] = distributedslip2gmt(fileName)
     crossSectionAlongStrikeCoord = (xCoord.^2 + yCoord.^2) .^0.5;
     crossSectionAlongStrikeCoord = crossSectionAlongStrikeCoord - crossSectionAlongStrikeCoord(1);
     crossSectionAlongStrikeCoord(crossSectionAlongStrikeCoord ~= 0) = -crossSectionAlongStrikeCoord(crossSectionAlongStrikeCoord ~= 0);
-
+    crossSectionAlongStrikeCoord = crossSectionAlongStrikeCoord';
+    
     % Extract the along-dip value and slip keep/save value for each point
     alongDipCoord = faults(8,:)';
     slip_keep_save = faults(6,:)';
