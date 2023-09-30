@@ -25,4 +25,8 @@ function [] = burnin_results(fileName, noOfsamplesToBurnIn)
     catch exception
         error('Error removing burn-in samples: %s', exception.message)
     end
+
+    % Save slip_keep results into a text file
+    save slip_keep.txt slip_keep -ascii
+
 end
