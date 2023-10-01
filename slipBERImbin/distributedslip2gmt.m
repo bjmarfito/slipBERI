@@ -15,15 +15,16 @@ function[] = distributedslip2gmt(fileName)
 
     % Calculate the distance along the strike of the fault
     crossSectionAlongStrikeCoord = (xCoord.^2 + yCoord.^2) .^0.5;
-    crossSectionAlongStrikeCoord = crossSectionAlongStrikeCoord - crossSectionAlongStrikeCoord(1);
 
     %Epicenter plotting for depth
-    utmepicenterToDepth = (utmepicenter(1).^2 + utmepicenter(2).^2);
-    utmepicenterToDepth = utmepicenterToDepth.^0.5 - crossSectionAlongStrikeCoord(1);
-    utmepicenterToDepth = [utmepicenterToDepth utmepicenter(3)];
-    writematrix(utmepicenterToDepth, 'utm_epicenter.txt', 'Delimiter', 'space');
+    utmepicenterToDepth = (utmepicenter(1,2).^2 + utmepicenter(1,1).^2) .^0.5;
+    utmepicenterToDepth = (utmepicenterToDepth - crossSectionAlongStrikeCoord(1));
+    utmepicenterToDepth = -1.* utmepicenterToDepth./1000;
+    utmepicenterToDepth = [utmepicenterToDepth -1.*utmepicenter(1,3)];
+    writematrix(utmepicenterToDepth, 'subsurface_epicenter.txt', 'Delimiter', 'space');
 
     % Reference the along-strike distance to the minimum distance
+    crossSectionAlongStrikeCoord = crossSectionAlongStrikeCoord - crossSectionAlongStrikeCoord(1);
     crossSectionAlongStrikeCoord(crossSectionAlongStrikeCoord ~= 0) = -crossSectionAlongStrikeCoord(crossSectionAlongStrikeCoord ~= 0);
     crossSectionAlongStrikeCoord = crossSectionAlongStrikeCoord';
 
