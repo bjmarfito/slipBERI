@@ -464,7 +464,7 @@ for i = 1:n_fault_strands
     [LAT,LON]=utm2ll([fault_coords(i,1), fault_coords(i,3)],[fault_coords(i,2), fault_coords(i,4)],data.UTMzone); 
     fault_coords_latlong = [fault_coords_latlong; (LON)', LAT'];
 end
-writematrix('fault_coords_latlong.gmt', fault_coords_latlong, 'Delimiter', ',' )
+writematrix(fault_coords_latlong, 'fault_coords_latlong.gmt', 'Delimiter', ',' )
 
 % Start with some easy thing
 %total_n_slip_patches = n_along_strike_patches' * n_down_dip_patches;                     % this works even if you have multiple fault strands
