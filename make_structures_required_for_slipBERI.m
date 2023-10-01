@@ -4,7 +4,8 @@
 % https://docs.google.com/document/d/1cUXLRxN-oB8Q8kGOueq2c-Zxr3W1vDgWpGUw1MAEx5s/edit#
 
 
-clear all
+clear
+close all
 
 % 'fault' contains details about the fault model upon which slip will be inverted
 fault = struct('fault_descriptor_file', 'name_of_text_file_with_fault_details_in.txt',...       % Name of fault text file

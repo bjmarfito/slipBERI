@@ -7,7 +7,7 @@ function[] = distributedslip2gmt(fileName)
     load(fileName)
 
     % Clear unnecessary variables
-    clearvars -except d_InSAR G patch_mean faults locs_InSAR_latlong
+    clearvars -except d_InSAR G patch_mean faults locs_InSAR_latlong utmepicenter
 
     % Extract the x and y coordinates of the fault
     xCoord = faults(1,:);
@@ -16,6 +16,14 @@ function[] = distributedslip2gmt(fileName)
     % Calculate the distance along the strike of the fault
     crossSectionAlongStrikeCoord = (xCoord.^2 + yCoord.^2) .^0.5;
     crossSectionAlongStrikeCoord = crossSectionAlongStrikeCoord - crossSectionAlongStrikeCoord(1);
+
+    %Epicenter plotting for depth
+    utmepicenterToDepth = (utmepicenter(1).^2 + utmepicenter(2).^2);
+    utmepicenterToDepth = utmepicenterToDepth.^0.5 - crossSectionAlongStrikeCoord(1);
+    utmepicenterToDepth = [utmepicenterToDepth utmepicenter(3)];
+    writematrix(utmepicenterToDepth, 'utm_epicenter.txt', 'Delimiter', 'space');
+
+    % Reference the along-strike distance to the minimum distance
     crossSectionAlongStrikeCoord(crossSectionAlongStrikeCoord ~= 0) = -crossSectionAlongStrikeCoord(crossSectionAlongStrikeCoord ~= 0);
     crossSectionAlongStrikeCoord = crossSectionAlongStrikeCoord';
 

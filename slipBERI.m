@@ -1,4 +1,4 @@
- function [  ] = slipBERI( fault, data, invert, priors, elastic_params, display, housekeeping )
+function [  ] = slipBERI( fault, data, invert, priors, elastic_params, display, housekeeping )
 %
 % slipBERI is a code to invert for distribued earthquake slip, 
 % incorporating fractal properties. It does so using Bayesian methods.
@@ -464,7 +464,7 @@ for i = 1:n_fault_strands
     [LAT,LON]=utm2ll([fault_coords(i,1), fault_coords(i,3)],[fault_coords(i,2), fault_coords(i,4)],data.UTMzone); 
     fault_coords_latlong = [fault_coords_latlong; (LON)', LAT'];
 end
-dlmwrite('fault_coords_latlong.gmt', fault_coords_latlong);
+writematrix('fault_coords_latlong.gmt', fault_coords_latlong, 'Delimiter', ',' )
 
 % Start with some easy thing
 %total_n_slip_patches = n_along_strike_patches' * n_down_dip_patches;                     % this works even if you have multiple fault strands
@@ -2611,9 +2611,15 @@ disp('.....Okay, enough of that now.');
 disp('  ');
 
 inversion_time = toc;
+time = inversion_time/3600;
+fprintf('Time taken = %.2f hours\n', time)
+
+% Added to save earthquake epicenter
+EQ_epicenter = data.EQ_epicenter;
+utmepicenter = ll2utm(EQ_epicenter(1), EQ_epicenter(2));
+utmepicenter = [utmepicenter EQ_epicenter(3)];
 
 %% Save everything - in case display_result doesn't run proper
-
 savename = [housekeeping.save_name, '_', num2str(n_down_dip_patches_for_smoothing(1)), 'x', num2str(n_along_strike_patches_for_smoothing(1)), '_', invert.smoothing, 'smooth_', invert.solve_for_dip, 'dip_', num2str(invert.iterations), '_', invert.regularise_moment, 'M0reg_', priors.slip_prior, '_', invert.solve_for_fault_size, 'patchesonoff'];            
 
 
