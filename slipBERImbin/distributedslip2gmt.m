@@ -21,7 +21,7 @@ function[] = distributedslip2gmt(fileName)
     utmepicenterToDepth = (utmepicenterToDepth - crossSectionAlongStrikeCoord(1));
     utmepicenterToDepth = -1.* utmepicenterToDepth./1000;
     utmepicenterToDepth = [utmepicenterToDepth -1.*utmepicenter(1,3)];
-    writematrix(utmepicenterToDepth, 'subsurface_epicenter.txt', 'Delimiter', 'space');
+    writematrix(utmepicenterToDepth, 'hypocenter.txt', 'Delimiter', 'space');
 
     % Reference the along-strike distance to the minimum distance
     crossSectionAlongStrikeCoord = crossSectionAlongStrikeCoord - crossSectionAlongStrikeCoord(1);
