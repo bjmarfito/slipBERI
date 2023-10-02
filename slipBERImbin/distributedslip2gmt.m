@@ -1,5 +1,5 @@
 %% Code to convert slipBERI models into GMT format
-% Usage: slip2gmt(filename) converts a slipberi file to a GMT subsurface file
+% Usage: distributedslip2gmt(filename) 
 % Author: Bryan Marfito, 30 September 2023
 
 function[] = distributedslip2gmt(fileName)
