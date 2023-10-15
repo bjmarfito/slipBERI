@@ -26,7 +26,8 @@ function [] = burnin_results(fileName, noOfsamplesToBurnIn)
         error('Error removing burn-in samples: %s', exception.message)
     end
 
-    % Save slip_keep results into a text file
+    % Save slip_keep and rake_keep results into a text file
     save slip_keep.txt slip_keep -ascii
+    save rake_keep.txt rake_keep -ascii
 
 end
