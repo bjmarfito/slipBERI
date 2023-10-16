@@ -27,9 +27,14 @@ function[] = slipberi2gmt(fileName)
     crossSectionAlongStrikeCoord = crossSectionAlongStrikeCoord - crossSectionAlongStrikeCoord(1);
     crossSectionAlongStrikeCoord(crossSectionAlongStrikeCoord ~= 0) = -crossSectionAlongStrikeCoord(crossSectionAlongStrikeCoord ~= 0);
     crossSectionAlongStrikeCoord = crossSectionAlongStrikeCoord';
+    
 
     % Convert the distance along strike to km
     crossSectionAlongStrikeCoord = crossSectionAlongStrikeCoord ./1000;
+
+    % Creates a file referenced to the hypocenter location
+    % Disabled for now
+    %crossSectionAlongStrikeCoordHypocenterReferenced = crossSectionAlongStrikeCoord + utmepicenterToDepth(1,1);
     
     % Extract the along-dip value and slip keep/save value for each point
     % Convert along-dip to km
@@ -46,13 +51,28 @@ function[] = slipberi2gmt(fileName)
     outputFileName = 'slip.txt';
     writematrix(gmtValueFormat, outputFileName, 'Delimiter', 'space');
 
-    %Slip vector
+    % Combine the hypocenter referenced values into a matrix for output
+    % Disabled for now
+    %crossSectionAlongStrikeCoordHypocenterReferenced = -1.*crossSectionAlongStrikeCoordHypocenterReferenced;
+    %gmtValueFormatHypocenterReferenced = [crossSectionAlongStrikeCoordHypocenterReferenced alongDipCoord slip_keep_save];
+
+    % Write the output to a file
+    % Disabled for now
+    %outputFileNameHypocenterReferenced = 'slip_hypocenter_referenced.txt';
+    %writematrix(gmtValueFormatHypocenterReferenced, outputFileNameHypocenterReferenced, 'Delimiter', 'space');
+
+    % Slip vector
     slipVector =[crossSectionAlongStrikeCoord alongDipCoord rake_mean slip_keep_save];
     writematrix(slipVector, 'slip_vector.txt', 'Delimiter', 'space'); 
 
     % Generate metadata for subsurface slip
     metaDataSlip = [min(crossSectionAlongStrikeCoord) max(crossSectionAlongStrikeCoord); min(alongDipCoord) max(alongDipCoord)];
     writematrix(metaDataSlip, 'metadata_slip.txt', 'Delimiter', 'space');
+
+    % Generate metadata for hypocenter referenced subsurface slip
+    % Disabled for now
+    %metaDataSlip = [min(crossSectionAlongStrikeCoordHypocenterReferenced) max(crossSectionAlongStrikeCoordHypocenterReferenced); min(alongDipCoord) max(alongDipCoord)];
+    %writematrix(metaDataSlip, 'metadata_slip_hypocenter_referenced.txt', 'Delimiter', 'space');
 
     % Generate data, model and residual files for GMT
     lonlat = locs_InSAR_latlong(1:2,:)';
