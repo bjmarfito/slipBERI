@@ -1,7 +1,7 @@
 function[] = slipberi2coulomb(fileName)
+    % Load only the necessary variables from slipBERI output file
     load(fileName,"disloc_model","rake_mean","patch_mean")
 
-    % Retain disloc_model, rake_mean, and slip_mean
     faults = disloc_model';
     noSubPatches = size(faults);
 
