@@ -3,11 +3,11 @@
 % Author: Bryan Marfito, 30 September 2023
 
 function[] = slipberi2gmt(fileName)
-    % Load the slipBERI file
-    load(fileName)
+    % Load only the necessary variables from slipBERI output file
+    load(fileName, "d_InSAR", "G", "patch_mean", "faults", "locs_InSAR_latlong", "utmepicenter", "rake_mean")
 
     % Clear unnecessary variables
-    clearvars -except d_InSAR G patch_mean faults locs_InSAR_latlong utmepicenter rake_mean
+    %clearvars -except d_InSAR G patch_mean faults locs_InSAR_latlong utmepicenter rake_mean
 
     % Extract the x and y coordinates of the fault
     xCoord = faults(1,:);
