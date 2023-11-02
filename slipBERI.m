@@ -1,4 +1,4 @@
-function [  ] = slipBERI( fault, data, invert, priors, elastic_params, display, housekeeping)
+function [  ] = slipBERI(fault, data, invert, priors, elastic_params, display, housekeeping)
 %
 % slipBERI is a code to invert for distribued earthquake slip, 
 % incorporating fractal properties. It does so using Bayesian methods.
