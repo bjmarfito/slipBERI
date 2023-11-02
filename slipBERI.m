@@ -679,6 +679,7 @@ else
 end
 
 if strcmp(invert.no_bottom_edge_slip, 'yes') == 1
+    disp("Imposing no slip at the edges and at the bottom of the fault")
     [spatialModelDip, ~] = size(spatial_model1);
     for i = 1: total_n_slip_patches
         if mod(i,spatialModelDip) == 0

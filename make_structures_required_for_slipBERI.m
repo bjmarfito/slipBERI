@@ -36,6 +36,7 @@ data = struct('InSAR_datafile', {{'name_of_InSAR_datafile.txt'}}, ...       % {{
 invert = struct('quickcheck', 'yes',...                         % 'yes' or 'no'
                 'inversion_type', 'bayesian', ...               % 'bayesian' or 'least_squares'
                 'iterations', 100000, ...                       % only relevant for bayesian inversions
+                'no_bottom_edge_slip' , 'no',...                % %Warning this is only tested for a single fault strand, 'yes' - no slip on the bottom and edge of the fault or 'no'
                 'smoothing', 'VK',...                           % 'VK' or 'laplacian' or 'none'
                 'smooth_across_fault_strands', 'yes',...        % 'yes' or 'no'
                 'slip_initial', 0.7, ...                        % meters
