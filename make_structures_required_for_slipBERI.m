@@ -11,6 +11,9 @@ close all
 fault = struct('fault_descriptor_file', 'name_of_text_file_with_fault_details_in.txt',...       % Name of fault text file
                 'fault_coordinate_unit', 'long/lat');                                           % 'long/lat' or 'utm'
 
+% 'covariance' contains details about the covariance matrix which will be used in the inversion
+insar_covariance = struct('covariance_file', 'reweighCovMatrix.txt');
+
 % 'data' contains details about the data which will be used in the inversion
 data = struct('InSAR_datafile', {{'name_of_InSAR_datafile.txt'}}, ...       % {{'name_of_InSAR_text_file1.txt', 'name_of_InSAR_text_file2.txt'}}, or 'none'
               'InSAR_coordinate_unit', 'utm',...                            % 'long/lat' or 'utm'

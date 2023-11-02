@@ -1,4 +1,4 @@
-function [  ] = slipBERI( fault, data, invert, priors, elastic_params, display, housekeeping )
+function [  ] = slipBERI( fault, data, invert, priors, elastic_params, display, housekeeping)
 %
 % slipBERI is a code to invert for distribued earthquake slip, 
 % incorporating fractal properties. It does so using Bayesian methods.
@@ -705,27 +705,33 @@ if strcmp(testing.testing_mode, 'no') == 1
     
     %if you have InSAR data ..................................................
     if strcmp(data.InSAR_datafile, 'none') ~= 1
-         disp('  ');
-         disp(['Calculating var-covar matrix for Insar file ', data.InSAR_datafile]);
 
-            % Assuming previously calculated sill and nugget and range, so load it.
-            sigma_d_InSAR = [];
-            for p = 1:size(data.varcovar_details,2)
-                [sill, nugget, variogram_range]=textread(cell2mat(data.varcovar_details(p)),'%f %f %f');  % range in meters
-                [npoints]=textread(cell2mat(data.quadtree_n_points(p)),'%f');  % range in meters
+            if strcmp(insar_covariance.covariancefile, 'none') ~= 1
+                % Covariance file has been calculated previously, so load it.
+                disp('  ');
+                disp(['Loading the calculated covariance matrix from ', insar_covariance.covariancefile]);
+                sigma_d_InSAR = load(insar_covariance.covariancefile);
+            else
+                % Assuming previously calculated sill and nugget and range, so load it.
+                disp('  ');
+                disp(['Calculating var-covar matrix for Insar file ', data.InSAR_datafile]);
+                sigma_d_InSAR = [];
+                for p = 1:size(data.varcovar_details,2)
+                    [sill, nugget, variogram_range]=textread(cell2mat(data.varcovar_details(p)),'%f %f %f');  % range in meters
+                    [npoints]=textread(cell2mat(data.quadtree_n_points(p)),'%f');  % range in meters
             
-                % Calculate distance between all points
-                x = locs_InSAR(1,InSAR_identifyer==p);   % meters
-                y = locs_InSAR(2,InSAR_identifyer==p);
-                x_dists =  pdist2(x',x');
-                y_dists =  pdist2(y',y');
-                dist = sqrt( x_dists.^2 + y_dists.^2);     % this is in meters
+                    % Calculate distance between all points
+                    x = locs_InSAR(1,InSAR_identifyer==p);   % meters
+                    y = locs_InSAR(2,InSAR_identifyer==p);
+                    x_dists =  pdist2(x',x');
+                    y_dists =  pdist2(y',y');
+                    dist = sqrt( x_dists.^2 + y_dists.^2);     % this is in meters
 
-                % Calculate var-covar matrix
-                sigma_d_tmp = (sill-nugget) * exp((-3*dist)/variogram_range)+diag(nugget./ npoints);      %if using quadtree.
-                sigma_d_InSAR = blkdiag(sigma_d_InSAR, sigma_d_tmp);
+                    % Calculate var-covar matrix
+                    sigma_d_tmp = (sill-nugget) * exp((-3*dist)/variogram_range)+diag(nugget./ npoints);      %if using quadtree.
+                    sigma_d_InSAR = blkdiag(sigma_d_InSAR, sigma_d_tmp);
+                end
             end
-            
             % If you you want to weight it ....................................................
             sigma_d_InSAR = sigma_d_InSAR/data.weight_InSAR;
     else
