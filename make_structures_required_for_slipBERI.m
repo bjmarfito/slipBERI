@@ -11,13 +11,10 @@ close all
 fault = struct('fault_descriptor_file', 'name_of_text_file_with_fault_details_in.txt',...       % Name of fault text file
                 'fault_coordinate_unit', 'long/lat');                                           % 'long/lat' or 'utm'
 
-% 'insar_covariance' contains details about the covariance matrix which will be used in the inversion
-% set to 'none' to calculate covariance from sill, nugget, and variogram
-insar_covariance = struct('covariance_file', 'reweighCovMatrix.txt');
-
 % 'data' contains details about the data which will be used in the inversion
 data = struct('InSAR_datafile', {{'name_of_InSAR_datafile.txt'}}, ...       % {{'name_of_InSAR_text_file1.txt', 'name_of_InSAR_text_file2.txt'}}, or 'none'
               'InSAR_coordinate_unit', 'utm',...                            % 'long/lat' or 'utm'
+              'InSAR_covariance_file', 'reweighCovMatrix.txt',...           % 'none' or name of covariance matrix text file. set to 'none' to calculate covariance from sill, nugget, and variogram
               'varcovar_details', {{'text_file_with_sill_nugget_range_for_covariance_calculation.txt'}},...
               'quadtree_n_points', {{'text_file_with_details_of_how_many_points_are_averaged_in_each_pixel.txt'}},...       % If not downsampled using quadtree, this is just a text file of 1s, same length as InSAR data
               'GPS_datafile_2d', 'name_of_GPS_2d_file.txt',...              % Name of GPS 2D text file, or 'none'

@@ -706,11 +706,11 @@ if strcmp(testing.testing_mode, 'no') == 1
     %if you have InSAR data ..................................................
     if strcmp(data.InSAR_datafile, 'none') ~= 1
 
-            if strcmp(insar_covariance.covariancefile, 'none') ~= 1
+            if strcmp(data.InSAR_covariance_file, 'none') ~= 1
                 % Covariance file has been calculated previously, so load it.
                 disp('  ');
-                disp(['Loading the calculated covariance matrix from ', insar_covariance.covariancefile]);
-                sigma_d_InSAR = load(insar_covariance.covariancefile);
+                disp(['Loading the calculated covariance matrix from ', data.InSAR_covariance_file]);
+                sigma_d_InSAR = load(data.InSAR_covariance_file);
             else
                 % Assuming previously calculated sill and nugget and range, so load it.
                 disp('  ');
