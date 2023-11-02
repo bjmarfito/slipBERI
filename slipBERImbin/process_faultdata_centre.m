@@ -165,7 +165,7 @@ p=0 ;
 
 % set reversal flag to zero
 
-reversed=0 ;
+reversed=0;
 
 % set up loops in which to calculate the desired parameters
 % (e.g. strike, dip, length, width...) and put them into the
@@ -175,7 +175,7 @@ reversed=0 ;
 
 % loop through entries in the input data
 
-for i=1:m ;
+for i=1:m
 
 % check the dip of the fault plane... if it is greater than 90
 % degrees, take appropriate action - switching end point

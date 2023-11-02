@@ -678,9 +678,21 @@ else
     G_ds = [];    
 end
 
- 
-
-
+if strcmp(invert.no_bottom_edge_slip, 'yes') == 1
+    [spatialModelDip, ~] = size(spatial_model1);
+    for i = 1: total_n_slip_patches
+        if mod(i,spatialModelDip) == 0
+            G(:,i) = 0;
+            G_ds(:,i) = 0;
+            G_ss(:,i) = 0;
+        end
+        if i <= spatialModelDip || i >= total_n_slip_patches - spatialModelDip
+            G(:,i) = 0;
+            G_ds(:,i) = 0;
+            G_ss(:,i) = 0;
+        end
+    end
+end
 
 
 % *********** % ************ % ********** % ********** % ********** % *****
@@ -790,9 +802,9 @@ end
 if strcmp(invert.inversion_type, 'least_squares') == 1 && strcmp(invert.smoothing, 'tikhonov') +  strcmp(invert.smoothing, 'cv') ~= 1 
         disp('Solving for slip using fast non-negative least-squares...');
 		ATA= G'* G;
-    	ATD= G'*d ;
+    	ATD= G'* d;
     	[least_sq_solution, ~]=fnnls(ATA,ATD) ;
-        least_sq_residuals =  calc_WRMS_offset( least_sq_solution, G, d, inv_sigma_d, offset_curr );  
+        least_sq_residuals =  calc_WRMS_offset( least_sq_solution, G, d, inv_sigma_d, offset_curr);  
 end
      
    
