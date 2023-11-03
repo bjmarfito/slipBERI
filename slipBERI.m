@@ -2635,7 +2635,7 @@ fprintf('Time taken = %.2f hours\n', time)
 
 % Added to save earthquake epicenter
 EQ_epicenter = data.EQ_epicenter;
-utmepicenter = local2llh(EQ_epicenter(2), EQ_epicenter(1));
+utmepicenter = ll2utm(EQ_epicenter(2), EQ_epicenter(1));
 utmepicenter = [utmepicenter EQ_epicenter(3)];
 
 %% Save everything - in case display_result doesn't run proper
