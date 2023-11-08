@@ -1,4 +1,4 @@
-function [U,flag]=disloc3d2(m,x,lambda,mu)
+function [U,flag]=disloc3d3(m,x,lambda,mu)
 % DISLOC3D    [U,flag]=disloc3d(m,x,lambda,mu)
 %
 % Returns the deformation at point 'x', given dislocation

@@ -447,7 +447,7 @@ end
 % *********** % ************ % ********** % ********** % ********** % *****
 
 % Create dislocation model for each patch
-[disloc_model, spatial_model1, spatial_model2, spatial_model3, spatial_model4, fault_coords, ~, n_along_strike_patches, n_down_dip_patches, fault_length, fault_width,n_fault_strands, strike, fault_strand_togetherness ] =...
+[disloc_model, spatial_model1, spatial_model2, spatial_model3, spatial_model4, fault_coords, ~, n_along_strike_patches, n_down_dip_patches, fault_length, fault_width,n_fault_strands, strike, fault_strand_togetherness] =...
 	process_faultdata_centre(fault, invert, use_local_coordinate_system, data.origin, testing);             % if you're padding the edges with zeros, THESE EXTRA PATCHES GET ADDED HERE
 
 spatial_model2column = reshape(spatial_model2, [],1);
@@ -678,22 +678,22 @@ else
     G_ds = [];    
 end
 
-if strcmp(invert.no_bottom_edge_slip, 'yes') == 1
-    disp("Imposing no slip at the edges and at the bottom of the fault")
-    [spatialModelDip, ~] = size(spatial_model1);
-    for i = 1: total_n_slip_patches
-        if mod(i,spatialModelDip) == 0
-            G(:,i) = 0;
-            G_ds(:,i) = 0;
-            G_ss(:,i) = 0;
-        end
-        if i <= spatialModelDip || i >= total_n_slip_patches - spatialModelDip
-            G(:,i) = 0;
-            G_ds(:,i) = 0;
-            G_ss(:,i) = 0;
-        end
-    end
-end
+% if strcmp(invert.no_bottom_edge_slip, 'yes') == 1
+%     disp("Imposing no slip at the edges and at the bottom of the fault")
+%     [spatialModelDip, ~] = size(spatial_model1);
+%     for i = 1: total_n_slip_patches
+%         if mod(i,spatialModelDip) == 0
+%             G(:,i) = 0;
+%             G_ds(:,i) = 0;
+%             G_ss(:,i) = 0;
+%         end
+%         if i <= spatialModelDip || i >= total_n_slip_patches - spatialModelDip
+%             G(:,i) = 0;
+%             G_ds(:,i) = 0;
+%             G_ss(:,i) = 0;
+%         end
+%     end
+% end
 
 
 % *********** % ************ % ********** % ********** % ********** % *****
@@ -795,8 +795,8 @@ disp('    ');
 if strcmp(invert.inversion_type, 'least_squares') ==1 && strcmp(invert.smoothing, 'laplacian') == 1   
         disp('Finding Laplacian matrix, with smoothing factor = ') 
         [smooth_los_kernel,smooth_obsdispl_los] = add_smoothing(G, d, spatial_model1, spatial_model2, spatial_model3, spatial_model4, (invert.scalar_smoothing_factor^2), n_datasets) ; % borrowed from gjf. This function takes an already existing kernel and observation set, and adds a Laplacian-minimising smoothing operation to it.
-    	G=smooth_los_kernel ;
-   	 	d=smooth_obsdispl_los ;
+    	G=smooth_los_kernel;
+   	 	d=smooth_obsdispl_los;
 end
             
 
