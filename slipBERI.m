@@ -794,7 +794,7 @@ disp('    ');
 
 if strcmp(invert.inversion_type, 'least_squares') ==1 && strcmp(invert.smoothing, 'laplacian') == 1   
         disp('Finding Laplacian matrix, with smoothing factor = ') 
-        [smooth_los_kernel,smooth_obsdispl_los] = add_smoothing(G, d, spatial_model1, spatial_model2, spatial_model3, spatial_model4, (invert.scalar_smoothing_factor^2), n_datasets) ; % borrowed from gjf. This function takes an already existing kernel and observation set, and adds a Laplacian-minimising smoothing operation to it.
+        [smooth_los_kernel,smooth_obsdispl_los] = add_smoothing(G, d, spatial_model1, spatial_model2, spatial_model3, spatial_model4, (invert.scalar_smoothing_factor^2), n_datasets); % borrowed from gjf. This function takes an already existing kernel and observation set, and adds a Laplacian-minimising smoothing operation to it.
     	G=smooth_los_kernel;
    	 	d=smooth_obsdispl_los;
 end

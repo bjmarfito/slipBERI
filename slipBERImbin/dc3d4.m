@@ -1,4 +1,4 @@
-function [ux,uy,uz,err] = dc3d3(alpha,x,y,dip,al1,al2,aw1,aw2,disl1,disl2) 
+function [ux,uy,uz,err] = dc3d4(alpha,x,y,dip,al1,al2,aw1,aw2,disl1,disl2) 
 %% function [ux,uy,uz,err] = dc3d3(alpha,x,y,dip,al1,al2,aw1,aw2,disl1,disl2)
 %%
 %% Direct Translation of Pete Clarke's dc3d3.c into octave code
