@@ -22,9 +22,13 @@ function[] = slipberi2coulomb(fileName)
     [lonIncrementUTM, latIncrementUTM, ~] = ll2utm(latIncrement, lonIncrement);
     lonIncrementUTM = lonIncrementUTM - utmepicenter(1);
     latIncrementUTM = latIncrementUTM - utmepicenter(2);
+    minGridLonUTM = minGridLonUTM - utmepicenter(1);
+    minGridLatUTM = minGridLatUTM - utmepicenter(2);
+    maxGridLonUTM = maxGridLonUTM - utmepicenter(1);
+    maxGridLatUTM = maxGridLatUTM - utmepicenter(2);
     
     % Array for grid parameters
-    gridArray = [minGridLonUTM; minGridLatUTM; maxGridLonUTM; maxGridLatUTM; lonIncrementUTM; latIncrementUTM]./1000;
+    gridArray = [minGridLonUTM; minGridLatUTM; maxGridLonUTM; maxGridLatUTM; lonIncrementUTM; latIncrementUTM] ./1000;
 
     % Poisson's ratio
     nu = 0.25;
@@ -116,12 +120,14 @@ function[] = slipberi2coulomb(fileName)
         % Dip value for subfaults
         faultDipPatches = ones(noSubPatches,1).*rad2deg(faultDip);
 
+
     end
 
     % Making the epicenter as the reference point
     patchX = (patchX - utmepicenter(1)) ./1000;
     patchY = (patchY - utmepicenter(2))./1000;
-
+    patchZ = patchZ ./1000;
+    faultNo = "   Fault 1";
     % Put all the fault parameters in an array
     matrix2inr = [faultSegmentID patchX(1,:)' patchY(1,:)' patchX(2,:)' patchY(2,:)' kode rake_mean patch_mean faultDipPatches -1.*patchZ(1,:)' -1.*patchZ(3,:)'];
     
@@ -148,7 +154,7 @@ function[] = slipberi2coulomb(fileName)
     fprintf(fileID,'  #   X-start    Y-start     X-fin      Y-fin   Kode   rake     netslip   dip angle     top        bot\n');
     fprintf(fileID,'xxx xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxx xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx xxxxxxxxxx\n');
     for faultPatch = 1:noSubPatches
-        fprintf(fileID, '%3i %10.4f %10.4f %10.4f %10.4f %3i %10.4f %10.4f %10.4f %10.4f %10.4f\n',matrix2inr(faultPatch,:));
+        fprintf(fileID, '%3i %10.4f %10.4f %10.4f %10.4f %3i %10.4f %10.4f %10.4f %10.4f %10.4f %s\n',matrix2inr(faultPatch,:), faultNo);
     end
 
     fprintf(fileID,'  \n');
