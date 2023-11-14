@@ -1585,8 +1585,14 @@ if strcmp(invert.inversion_type, 'bayesian') == 1                         %bayes
                 
                % THESIS CORRECTIONS - trying out all free edges
                L =[];
-                for i = 1: n_fault_strands_for_smoothing   % If we're not smoothing across the faults, then we'll treat them all separately, so we'll store them all in a big diagonal matrix.                
-                    L_temp = laplace_fault_allfree(n_down_dip_patches_for_smoothing(i),n_along_strike_patches_for_smoothing(i),r(i),free_edge);  % thanks to andy for this one
+                for i = 1: n_fault_strands_for_smoothing   % If we're not smoothing across the faults, then we'll treat them all separately, so we'll store them all in a big diagonal matrix.
+                    if  strcmp(invert.zero_slip_bottom_edge, 'yes') == 1
+                        fprint("\nApplying no slip at the edges and bottom of the fault!.\n")
+                        fprintf("Only apply if there is only one fault!\n")
+                        L_temp = laplace_fault(n_down_dip_patches_for_smoothing(i),n_along_strike_patches_for_smoothing(i),r(i),free_edge);
+                    else        
+                        L_temp = laplace_fault_allfree(n_down_dip_patches_for_smoothing(i),n_along_strike_patches_for_smoothing(i),r(i),free_edge);  % thanks to andy for this one
+                    end
                     L = blkdiag(L,L_temp);
                     %if strcmp(invert.laplacian_smoothing_bayesian, 'none') ~= 1
                         %invert.laplacian_smoothing_bayesian = 1 + invert.laplacian_smoothing;
@@ -1595,7 +1601,7 @@ if strcmp(invert.inversion_type, 'bayesian') == 1                         %bayes
                     %end
                     clear L_temp
                 end 
-                free_edge = 'all_free';
+                %free_edge = 'all_free';
 
                 logprior_curr = calc_logprior_laplacian( slip_initial(:,1), L, alpha2_initial(:,1), n_fault_strands_for_smoothing, first_patch_in_strand_for_smoothing_master, last_patch_in_strand_for_smoothing_master);
                 predominant_faulting_style = [];

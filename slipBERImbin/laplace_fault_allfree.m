@@ -1,4 +1,4 @@
-function [L]=laplace_fault(n,m,r,free_edge)
+function [L]=laplace_fault_allfree(n,m,r,free_edge)
 %LAPLACE_FAULT return laplacian design matrix for n x m matrix
 %   L=laplace(n,m,r,free_edge)
 %   n is number of rows or cols in first dimension
