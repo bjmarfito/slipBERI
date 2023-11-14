@@ -1587,7 +1587,7 @@ if strcmp(invert.inversion_type, 'bayesian') == 1                         %bayes
                L =[];
                 for i = 1: n_fault_strands_for_smoothing   % If we're not smoothing across the faults, then we'll treat them all separately, so we'll store them all in a big diagonal matrix.
                     if  strcmp(invert.zero_slip_bottom_edge, 'yes') == 1
-                        fprint("\nApplying no slip at the edges and bottom of the fault!.\n")
+                        fprintf("\nApplying no slip at the edges and bottom of the fault!.\n")
                         fprintf("Only apply if there is only one fault!\n")
                         L_temp = laplace_fault(n_down_dip_patches_for_smoothing(i),n_along_strike_patches_for_smoothing(i),r(i),free_edge);
                     else        
