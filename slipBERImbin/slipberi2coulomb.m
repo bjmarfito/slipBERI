@@ -1,22 +1,26 @@
+%% Code to convert slipBERI output file to Coulomb input file
+% slipBERI output file is in the form of a .mat file and generates a Coulomb input file in .inr format
+% Usage: slipberi2coulomb(name of slipBERI output file)
+% Example: slipberi2coulomb('slipBERI_output.mat')
+% Author: Bryan Marfito, 11 Nov 2023
+
 function[] = slipberi2coulomb(fileName)
-    % Load only the necessary variables from slipBERI output file
+    % Load only the necessary variables from the slipBERI output file
     load(fileName,"disloc_model","rake_mean","patch_mean", "utmepicenter", "EQ_epicenter")
 
-    % Grid parameters
+    % Incremet of the grid in degrees
     distanceIncrement = 0.05;
 
-    % Create a grid for the Coulomb output file
-    %epicenter = EQ_epicenter;
-
-    %Create a +- 1 degree extent for Coulomb modelling
+    %Create a +- 1 degree extent from the epicenter for the Coulomb stress transfer models
     minGrid = EQ_epicenter(1:2) - 1;
     maxGrid = EQ_epicenter(1:2) + 1;
 
-    % Convert minimum and maximum extent to UTM coordinates
+    % Convert minimum and maximum extent from geocoordinates to UTM coordinates
     [minGridLonUTM, minGridLatUTM, ~] = ll2utm(minGrid(2), minGrid(1));
     [maxGridLonUTM, maxGridLatUTM, ~] = ll2utm(maxGrid(2), maxGrid(1));
 
-    % Calculate the number of grid points in the x- and y-direction
+    % Calculate the number of grid points in the Caretsian coordinates (x- and y-directions)
+    % and uses the epicenter as the reference point
     lonIncrement  =  EQ_epicenter(1) + distanceIncrement;
     latIncrement  =  EQ_epicenter(2) + distanceIncrement;
     [lonIncrementUTM, latIncrementUTM, ~] = ll2utm(latIncrement, lonIncrement);
@@ -27,7 +31,7 @@ function[] = slipberi2coulomb(fileName)
     maxGridLonUTM = maxGridLonUTM - utmepicenter(1);
     maxGridLatUTM = maxGridLatUTM - utmepicenter(2);
     
-    % Array for grid parameters
+    % Array for grid parameters in kilometers which will be needed by Coulomb for stress transfer calculation
     gridArray = [minGridLonUTM; minGridLatUTM; maxGridLonUTM; maxGridLatUTM; lonIncrementUTM; latIncrementUTM] ./1000;
 
     % Poisson's ratio
@@ -40,6 +44,7 @@ function[] = slipberi2coulomb(fileName)
     eta = 800000;
 
     % Depth in km where the stress is calculated
+    % This parameter can be changed later on in Coulomb software
     depthKmStressCalc = 4.0;
 
     % Friction coefficient
@@ -47,7 +52,9 @@ function[] = slipberi2coulomb(fileName)
 
     % Regional stress field(3x4) matrix, default values from Coulomb 3.3 software
     % Modified from global_variable_explanation.m 
-    % from the Coulomb 3.3 software
+    % in the Coulomb 3.3 software
+    % Useful only when stress transfer is calculated in optimally-oriented faults
+    % The values can be changed later on in Coulomb software
     % regionalStress(1,1): orientation of sigma-1 (degree)
     % regionalStress(1,2): plunge of sigma-1 (degree)
     % regionalStress(1,3): magnitude at the surface (bar)
@@ -60,13 +67,14 @@ function[] = slipberi2coulomb(fileName)
     % regionalStress(3,2): plunge of sigma-3 (degree)
     % regionalStress(3,3): magnitude at the surface (bar)
     % regionalStress(3,4): depth gradient (S0 + gradient * depth (km))
-
     regionalStress = [19 -0.01 100 0; 89.99 89.99 30 0; 109 -0.01 0 0];
 
+    % Extract the parameters of subpatches from the slipBERI output file
     faults = disloc_model';
     [noSubPatches,~] = size(faults);
 
-    % Initialize the patch coordinates
+    % Initialize the patch coordinates to preallocate the no of arrays needed for
+    %storing 
     patchX = zeros(4,noSubPatches);
     patchY = zeros(4,noSubPatches);
     patchZ = zeros(4,noSubPatches);
@@ -74,8 +82,12 @@ function[] = slipberi2coulomb(fileName)
     % Create ID for the main fault to be analyzed
     faultSegmentID = ones(noSubPatches,1);
 
+    % Generetes a default cross-section parameters
+    % This can be changed in the Coulomb software
     crossSectionParams = [-16; -16; 18; 26; 1; 30; 1];
 
+    % Loop through each fault patch and calculate the four corner coordinates of the fault subpatches
+    % using the given center coordinates, strike, dip, top, and bottom of the fault.
     for faultPatch = 1:noSubPatches
 
         % Extract fault parameters from slipBERI output file
@@ -88,49 +100,52 @@ function[] = slipberi2coulomb(fileName)
         faultTop = faults(faultPatch,8);
         faultBottom = faults(faultPatch,9);
 
-
         % Calculate the Aki-Richards x- and y- coordinates of the fault patches using the fault center
         xPoint1 = xCenter - 0.5*faultLength*sin(faultStrike);
         xPoint2 = xCenter + 0.5*faultLength*sin(faultStrike);
         yPoint1 = yCenter - 0.5*faultLength*cos(faultStrike);
         yPoint2 = yCenter + 0.5*faultLength*cos(faultStrike);
 
-        % Calculate the coordinates of the top of the fault patch using the Aki-Richards coordinates
+        % Calculate the x- and y- coordinates of the top of each fault subpatch
         xTop1 = xPoint1 + faultTop*cos(faultStrike)/tan(faultDip);
         xTop2 = xPoint2 + faultTop*cos(faultStrike)/tan(faultDip);
         yTop1 = yPoint1 - faultTop*sin(faultStrike)/tan(faultDip);
         yTop2 = yPoint2 - faultTop*sin(faultStrike)/tan(faultDip);
 
-    
-        % Calculate the coordinates of the bottom of the fault patch using the Aki-Richards coordinates
+        % Calculate the x- and y- coordinates coordinates of the bottom of each fault subpatch
         xBot1 = xPoint1 + faultBottom*cos(faultStrike)/tan(faultDip);
         xBot2 = xPoint2 + faultBottom*cos(faultStrike)/tan(faultDip);
         yBot1 = yPoint1 - faultBottom*sin(faultStrike)/tan(faultDip);
         yBot2 = yPoint2 - faultBottom*sin(faultStrike)/tan(faultDip);
 
-        % Stores the coordinates of the fault per x-, y-, and z- coordinates
-        % and converts them from meters to kilometers
+        % Stores the coordinates of each fault subpatch per x-, y-, and z- coordinates    
         patchX(1:4,faultPatch) = [xTop1 xTop2 xBot2 xBot1]';
         patchY(1:4,faultPatch) = [yTop1 yTop2 yBot2 yBot1]';
         patchZ(1:4,faultPatch) = [-faultTop  -faultTop  -faultBottom  -faultBottom]';
 
-        % Kode value for faults
-        kode = ones(noSubPatches,1).*100;
-
-        % Dip value for subfaults
+        % Converts dip values for subpatches to degrees again since Coulomb uses angles in degrees
         faultDipPatches = ones(noSubPatches,1).*rad2deg(faultDip);
-
-
     end
 
-    % Making the epicenter as the reference point
+    % Assign 100 as the kode value for faults
+    kode = ones(noSubPatches,1).*100;
+
+    % Make the epicenter as the reference point of thex- and y- coordinates 
+    % and converts them from meters to kilometers
     patchX = (patchX - utmepicenter(1)) ./1000;
     patchY = (patchY - utmepicenter(2))./1000;
+
+    % Converts the depth of the subpatches to kilometers
     patchZ = patchZ ./1000;
+
+    % Creates a comment name for the fault segment
     faultNo = "   Fault 1";
+
     % Put all the fault parameters in an array
     matrix2inr = [faultSegmentID patchX(1,:)' patchY(1,:)' patchX(2,:)' patchY(2,:)' kode rake_mean patch_mean faultDipPatches -1.*patchZ(1,:)' -1.*patchZ(3,:)'];
     
+    % Generate the Coulomb input file in .inr format using the format given in the Coulomb manual
+    % and using the parameters specified above
     fileID = fopen('slipBERI2Coulomb.inr','wt');
     fprintf(fileID,'header line 1 \n');
     fprintf(fileID,'header line 2 \n');
