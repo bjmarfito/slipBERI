@@ -678,23 +678,6 @@ else
     G_ds = [];    
 end
 
-% if strcmp(invert.no_bottom_edge_slip, 'yes') == 1
-%     disp("Imposing no slip at the edges and at the bottom of the fault")
-%     [spatialModelDip, ~] = size(spatial_model1);
-%     for i = 1: total_n_slip_patches
-%         if mod(i,spatialModelDip) == 0
-%             G(:,i) = 0;
-%             G_ds(:,i) = 0;
-%             G_ss(:,i) = 0;
-%         end
-%         if i <= spatialModelDip || i >= total_n_slip_patches - spatialModelDip
-%             G(:,i) = 0;
-%             G_ds(:,i) = 0;
-%             G_ss(:,i) = 0;
-%         end
-%     end
-% end
-
 
 % *********** % ************ % ********** % ********** % ********** % *****
 % Variance-covariance matrix 
@@ -1586,13 +1569,9 @@ if strcmp(invert.inversion_type, 'bayesian') == 1                         %bayes
                % THESIS CORRECTIONS - trying out all free edges
                L =[];
                 for i = 1: n_fault_strands_for_smoothing   % If we're not smoothing across the faults, then we'll treat them all separately, so we'll store them all in a big diagonal matrix.
-                    if  strcmp(invert.zero_slip_bottom_edge, 'yes') == 1
-                        fprintf("\nApplying no slip at the edges and bottom of the fault!\n")
-                        fprintf("Only apply if there is only one fault!\n")
-                        L_temp = laplace_fault(n_down_dip_patches_for_smoothing(i),n_along_strike_patches_for_smoothing(i),r(i),free_edge);
-                    else        
-                        L_temp = laplace_fault_allfree(n_down_dip_patches_for_smoothing(i),n_along_strike_patches_for_smoothing(i),r(i),free_edge);  % thanks to andy for this one
-                    end
+                    %L_temp = laplace_fault(n_down_dip_patches_for_smoothing(i),n_along_strike_patches_for_smoothing(i),r(i),free_edge);     
+                    L_temp = laplace_fault_allfree(n_down_dip_patches_for_smoothing(i),n_along_strike_patches_for_smoothing(i),r(i),free_edge);  % thanks to andy for this one
+                    
                     L = blkdiag(L,L_temp);
                     %if strcmp(invert.laplacian_smoothing_bayesian, 'none') ~= 1
                         %invert.laplacian_smoothing_bayesian = 1 + invert.laplacian_smoothing;
@@ -2653,6 +2632,9 @@ save(savename, '-v7.3');
 
 
 %% Calculate your averages, display the result
+if strcmp(invert.zero_slip_bottom_edge, 'yes') == 1
+    %
+end
 
 if strcmp(invert.inversion_type, 'least_squares') == 1 && strcmp(invert.smoothing, 'tikhonov') == 1
 %         visual_least_sq_solution = reshape(least_sq_solution, n_down_dip_patches, n_along_strike_patches);

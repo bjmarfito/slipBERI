@@ -17,9 +17,7 @@
 % R.M.J.Amey 2018
 
 
-
 %% Load data, if you need to
-
 fontsize_plot = 32;
 set(0,'DefaultAxesFontSize',fontsize_plot)
 set(0,'defaultAxesFontName', 'Times New Roman')
@@ -42,7 +40,7 @@ oldversion = exist('total_n_slip_patches_true');
 %% Find mean, mode, everything
 
 if strcmp(invert.inversion_type, 'bayesian') == 1
-    
+    disp("Displaying the mean of the Bayesian inversion")
     onlyonkeptpatches = slip_keep~=0;
     
         % Find mean slip on each slip patch
@@ -285,7 +283,35 @@ if strcmp(invert.inversion_type, 'bayesian') == 1
         patch_conf_intervals = patch_conf_intervals'; %one line per slip patch
 
         ninetyfive_percent_conf = diff(patch_conf_intervals,1,2);
+    
 
+    if strcmp(invert.zero_slip_bottom_edge, 'yes') == 1
+        fprintf("\nImposing no slip and rake at the edges and at the bottom of the fault!\n")
+        fprintf("Caution! Tested only for one fault strand case!\n")
+        [spatialModelDip, ~] = size(spatial_model1);
+        for i = 1: total_n_slip_patches
+            if mod(i,spatialModelDip) == 0
+                rake_mean(i,:) = 0; 
+                rake_mode(i,:) = 0;
+                rake_mostlikely(i,:) = 0;
+                rake_median(i,:) = 0;
+                patch_mean(i,:) = 0;
+                patch_median(i,:) = 0;
+                patch_mode(i,:) = 0;
+                patch_MAP(i,:) = 0;
+            end
+            if i <= spatialModelDip || i >= total_n_slip_patches - spatialModelDip
+                rake_mean(i,:) = 0; 
+                rake_mode(i,:) = 0;
+                rake_mostlikely(i,:) = 0;
+                rake_median(i,:) = 0;
+                patch_mean(i,:) = 0;
+                patch_median(i,:) = 0;
+                patch_mode(i,:) = 0;
+                patch_MAP(i,:) = 0;
+            end
+        end
+    end
 end
 
 %% Plot confidence intervals
