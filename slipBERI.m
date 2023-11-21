@@ -959,7 +959,7 @@ end
 %%%%%%%%%%%%%%%% SVD %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Explanation of SVD goes here
 
-if strcmp(invert.inversion_type, 'SVD') == 1 == 1
+if strcmp(invert.inversion_type, 'SVD') == 1
         disp('Solving for slip and rake using SVD...');
         G_svd = [G_ss, G_ds ];
         [U, S, V] = svd(G_svd);

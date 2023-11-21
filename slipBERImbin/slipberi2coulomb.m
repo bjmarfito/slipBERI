@@ -48,7 +48,7 @@ function[] = slipberi2coulomb(fileName)
     depthKmStressCalc = 4.0;
 
     % Friction coefficient
-    frictionCoefficient = 0.6;
+    frictionCoefficient = 0.4;
 
     % Regional stress field(3x4) matrix, default values from Coulomb 3.3 software
     % Modified from global_variable_explanation.m 
