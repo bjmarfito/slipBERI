@@ -116,8 +116,6 @@ end
 
 fault_length_meters = fault_length * 1000 ;      % ruth-hack - CONVERT TO METERS
 %**************************************************************************
-    
-
 
 top=fault_input(:,7) ;
 bottom=fault_input(:,8) ;
