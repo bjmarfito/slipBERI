@@ -1,4 +1,4 @@
-% Function to transform Aki-Richards to fault-centered coordinates
+% Function to transform Aki-Richards to fault top centered coordinates
 function[latc, lonc] = ar2fc(lata2r, lona2r, faultStrike, faultLength)
 
     arcLen = km2deg(0.5*faultLength);
