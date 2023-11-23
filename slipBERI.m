@@ -448,7 +448,7 @@ end
 
 % Create dislocation model for each patch
 [disloc_model, spatial_model1, spatial_model2, spatial_model3, spatial_model4, fault_coords, ~, n_along_strike_patches, n_down_dip_patches, fault_length, fault_width,n_fault_strands, strike, fault_strand_togetherness] =...
-	process_faultdata_centre(fault, invert, use_local_coordinate_system, data.origin, testing);             % if you're padding the edges with zeros, THESE EXTRA PATCHES GET ADDED HERE
+	process_faultdata_centre(fault, invert, use_local_coordinate_system, data.origin, testing, data.fault_origin_convention);             % if you're padding the edges with zeros, THESE EXTRA PATCHES GET ADDED HERE
 
 spatial_model2column = reshape(spatial_model2, [],1);
 spatial_model3column = reshape(spatial_model3, [],1);
