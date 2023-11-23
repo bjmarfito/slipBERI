@@ -67,11 +67,8 @@ if n_fault_strands > 1
 %    
 %    
 %    end
-  
-   
    
 end
-
 
 % set up variables
 
