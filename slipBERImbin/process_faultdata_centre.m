@@ -1,4 +1,4 @@
-function [disloc_model, spatial_model1, spatial_model2, spatial_model3, spatial_model4, seg_coords, oksar_out, alongstrike, downdip, fault_length_meters, fault_width_meters, n_fault_strands, strike, fault_segment_togetherness, twicesmoothed_togetherness] =  process_faultdata_centre(fault, invert, use_local_coordinate_system, origin, testing)
+function [disloc_model, spatial_model1, spatial_model2, spatial_model3, spatial_model4, seg_coords, oksar_out, alongstrike, downdip, fault_length_meters, fault_width_meters, n_fault_strands, strike, fault_segment_togetherness, twicesmoothed_togetherness] =  process_faultdata_centre(fault, invert, use_local_coordinate_system, origin, testing, fault_origin_convention)
 
 % function [disloc_model, spatial_model1, spatial_model2, spatial_model3, fault_coords, faultseg_coords, oksar_out] = 
 %   process_faultdata (input_filename)
@@ -73,11 +73,6 @@ if n_fault_strands > 1
 end
 
 
-
-
-
-
-  
 % set up variables
 
 strike=fault_input(:,1) ;
@@ -90,18 +85,24 @@ rake=fault_input(:,3) ;
 xc=fault_input(:,4) ;
 yc=fault_input(:,5) ;
 
+fault_length=fault_input(:,6) ;          % ruth-hack - change 'length' to 'fault_length'
+
+% Added by Bryan Marfito for fault origin convention
+if strcmp(fault_origin_convention, 'ar') == 1
+    [xc,yc] = ar2fc(yc, xc, strike, fault_length)
+end
+
+
 if strcmp(testing.testing_mode, 'no') == 1;
     if xc < 0
         xc = xc+360;
     end
 
     if strcmp(use_local_coordinate_system, 'yes') == 1;
-
         llh = [xc'; yc'; zeros(1,length(yc))];
          xy = llh2local(llh, origin);
          xc = (xy(1,:)*1000)';
          yc = (xy(2,:)*1000)'; 
-
     end
 
     if strcmp(fault.fault_coordinate_unit, 'long/lat') == 1;
@@ -116,7 +117,6 @@ else   % if in testing mode
     %disp('RUTH you commented out * 1000 in process_faultdata_cetner')
 end
 
-fault_length=fault_input(:,6) ;          % ruth-hack - change 'length' to 'fault_length'
 fault_length_meters = fault_length * 1000 ;      % ruth-hack - CONVERT TO METERS
 %**************************************************************************
     
