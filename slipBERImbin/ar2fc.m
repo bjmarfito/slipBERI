@@ -1,5 +1,5 @@
 % Function to transform Aki-Richards to fault centered coordinates
-function[lonc, latc] = ar2fc(lona2r, lata2r, faultStrike, faultLength)
+function[latc, lonc] = ar2fc(lata2r, lona2r, faultStrike, faultLength)
 
     arcLen = km2deg(0.5*faultLength);
     rotateCenterToAR = faultStrike + 180;
