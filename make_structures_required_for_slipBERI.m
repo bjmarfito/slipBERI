@@ -16,7 +16,7 @@ data = struct('InSAR_datafile', {{'name_of_InSAR_datafile.txt'}}, ...       % {{
               'InSAR_coordinate_unit', 'utm',...                            % 'long/lat' or 'utm'
               'InSAR_covariance_file', 'reweighCovMatrix.txt',...           % 'none' or name of covariance matrix text file. set to 'none' to calculate covariance from sill, nugget, and variogram
               'varcovar_details', {{'text_file_with_sill_nugget_range_for_covariance_calculation.txt'}},...
-              'fault_origin_convention', 'fc',...                           % set to ar if Aki-Richards convention, set to fc if fault center convention
+              'fault_origin_convention', 'ftc',...                           % set to ar if Aki-Richards convention, set to ftc if fault top centered convention
               'quadtree_n_points', {{'text_file_with_details_of_how_many_points_are_averaged_in_each_pixel.txt'}},...       % If not downsampled using quadtree, this is just a text file of 1s, same length as InSAR data
               'GPS_datafile_2d', 'name_of_GPS_2d_file.txt',...              % Name of GPS 2D text file, or 'none'
               'GPS_datafile_3d', 'name_of_GPS_3d_file.txt',...              % Name of GPS 3D text file, or 'none'
