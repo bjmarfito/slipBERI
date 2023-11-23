@@ -86,7 +86,7 @@ fault_length=fault_input(:,6) ;          % ruth-hack - change 'length' to 'fault
 
 % Added by Bryan Marfito for fault origin convention
 if strcmp(fault_origin_convention, 'ar') == 1
-    [xc,yc] = ar2fc(yc, xc, strike, fault_length)
+    [xc,yc] = ar2fc(yc, xc, strike, fault_length);
 end
 
 
