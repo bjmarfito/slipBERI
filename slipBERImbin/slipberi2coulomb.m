@@ -74,7 +74,7 @@ function[] = slipberi2coulomb(fileName)
     [noSubPatches,~] = size(faults);
 
     % Initialize the patch coordinates to preallocate the no of arrays needed for
-    %storing 
+    % storing the coordinates of each fault subpatch
     patchX = zeros(4,noSubPatches);
     patchY = zeros(4,noSubPatches);
     patchZ = zeros(4,noSubPatches);
